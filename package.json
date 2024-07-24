@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "dependencies": {
+    "diff": "^5.2.0",
+    "jsdiff": "^1.1.1",
+    "pdfjs-dist": "^4.4.168",
+    "require": "^0.4.4",
+    "requirejs": "^2.3.6",
+    "textract": "^2.5.0"
+  }
+}

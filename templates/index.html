@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Comparison Interface</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff/4.0.2/diff.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.4.16/diff2html.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsdiff@3.8.0/dist/diff.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.2.0/diff.min.js"></script>
+    <script type="module" src="https://npmcdn.com/pdfjs-dist/build/pdf.js"></script>
+    <script type = "module" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="button-container2">
+    <button id="guideButton" title="Guide">
+        ⓘ Guide
+    </button>
+  </div>
+  <div class="button-container">
+    <button id="exact-diff-button" style="display:none;">Exact diff</button>
+    <button id="reverse-button" style="display:none;">&#x2190;</button>
+  </div>
+    <div class="container">
+        <div class="options-space">
+          <div class="top-section">
+            <div class="section-title2">Entities search</div>
+            <input type="search" id="search_entity" class="search-input" placeholder="Search...">
+
+        </div>
+            <div class="normal-section">  
+                <label for="similarityMethod" id='simMethod' class = "parameter-label">Similarity method</label>
+                <select id="similarityMethod" class = "parameter-select">
+                    <option value="lexical">Lexical</option>
+                    <option value="embeddings">Embeddings</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+                <br><br>
+                <label for="similarityMethod2" id='simMethod2' class = "parameter-label">Precision method</label>
+                <select id="similarityMethod2" class = "parameter-select">
+                  <option value="selection_quantile">%Top Quantile</option>
+                  <option value="selection_sim_score">Similarity score</option>
+                  <option value="selection_sentences">Number of sentences/chunks</option>
+                </select>
+
+                <div id="sliderContainerConfidence" >
+                  <div id="sliderValueConfidence"></div> 
+                  <input type="range" id="sliderConfidence" name="slider" min="0" max="1" value="0.7" step="0.01">
+                  <input type="number" id="nb_sentences" name="nb_sentences" value="10" min="1" max="24" style=display:none;>
+                  <br>
+                  <label for="slider" id="slider_precision">%Top Quantile</label>
+                </div>
+                
+                <div id="containerLexical" class="checkboxes">
+                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Lexical metric</label><br>
+                    <input type="radio" id="checkbox1_lexical" name="methods_lexical" value="JACCARD">
+                    <label for="checkbox1_lexical">Jaccard</label><br>
+                    <input type="radio" id="checkbox2_lexical" name="methods_lexical" value="LEVENSHTEIN">
+                    <label for="checkbox2_lexical">Levenshtein</label><br>
+                    <input type="radio" id="checkbox3_lexical" name="methods_lexical" value="HAMMING">
+                    <label for="checkbox3_lexical">Hamming</label><br>
+                    <input type="radio" id="checkbox4_lexical" name="methods_lexical" value="JARO-WINKLER">
+                    <label for="checkbox4_lexical">Jaro-Winkler</label><br>
+                  </div>
+                  <br>
+                  
+                  <label for="text-processing-select" class="parameter-label">Text processing</label>
+                  <select id="text-processing-select" class="parameter-select">
+                      <option value="NGRAMS" selected>N-grams</option>
+                      <option value="SENTENCES">Sentences</option>
+                  </select>
+                  <br>
+                  <br>
+                 
+                  <div id="ngrams-container">
+                    <label for="ngrams-input" id="ngrams-label" class="parameter-label">N-Grams</label>
+                    <input class="parameter-select" type="number" id="ngrams-input" name="ngrams" value="10" min="1" >
+                  </div>
+                  <br>
+
+                  <div id="containerEmbeddings" class="checkboxes" style="display:none;">
+                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Vector distance metrics</label><br>
+                    <input type="radio" id="checkbox1_embeddings" name="methods_embeddings" value="COSINE">
+                    <label for="checkbox1_embeddings">Cosine</label><br>
+                    <input type="radio" id="checkbox2_embeddings" name="methods_embeddings" value="EUCLIDEAN">
+                    <label for="checkbox2_embeddings">Euclidean</label><br>
+                    <input type="radio" id="checkbox3_embeddings" name="methods_embeddings" value="DOT">
+                    <label for="checkbox3_embeddings">Dot product</label><br>
+                  </div>
+
+                  <br>
+
+                  <div id="embeddingsModelContainer" class="checkboxes" style="display:none;">
+                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Embedding</label><br>
+                    <input type="radio" id="embeddingsModelContainer1" name="embeddings_model" value="minilm">
+                    <label for="embeddingsModelContainer1">MiniLM-L12-v2</label><br>
+                    <input type="radio" id="embeddingsModelContainer2" name="embeddings_model" value="bert_base">
+                    <label for="embeddingsModelContainer2">bert-base</label><br>
+                    <input type="radio" id="embeddingsModelContainer3" name="embeddings_model" value="distiluse">
+                    <label for="embeddingsModelContainer3">distiluse-base</label><br>
+                  </div>
+                  <br>
+                  <div id="sliderContainer" style="display:none;">
+                    <div id="sliderValue"></div> 
+                    <input type="range" id="slider" name="slider" min="0" max="1" value="0.5" step="0.01">
+                    <br>
+                    <label for="slider" class="slider-label-left" >Embeddings</label>
+                    <label for="slider" class="slider-label-right">Lexical</label>
+                  </div>  
+            </div>
+        </div>
+        <div class="button-container">
+          <button class="importButton" id="importButton1">Import Text 1</button>
+          <button class="importButton" id="findNextButton">Find next</button>
+          <button class="importButton" id="importButton2">Import Text 2</button>
+      </div>
+      
+
+        <div class="text-container">
+            <div class="left-column"></div>
+            <div id="text1" class="textfield" placeholder="Text 1" contenteditable="true"></div>
+            <div id="text2" class="textfield" placeholder="Text 2" contenteditable="true"></div>
+        </div>
+        <button id="submitButton">Compare</button>
+      
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+      <div>
+        <label id="methodSelectTitle" for="methodSelect">Language:</label>
+        <select id="guideSelect">
+            <option value="guide_french">Français</option>
+            <option value="guide_english">English</option>
+        </select>
+    </div>
+        <button class="popup-close" id="popupCloseBtn">&times;</button>
+        <div class="popup-title" id="popup-title">Guide pour comparaison de textes</div>
+        
+        <div class="popup-message" id="popup-message">
+            Cet outil permet de comparer deux textes en utilisant plusieurs méthodes de similarité : lexicale, avec des embeddings, ou les deux (hybride).
+            Deux phrases similaires sont surlignées dans la même couleur.
+            Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.
+        </div>
+        <div class="popup-section">
+            <div class="popup-section-title" id = "popup_section_title_1">Choisir des phrases similaires</div>
+            <div class="popup-section-text">
+              <h4 class="subtitle" id ='subtitle1'>Top% Quartile</h3>
+                <div id = subtitle1Content>Vous devez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un certain pourcentage des phrases les
+                  plus similaires se situe.
+                  <br>Si le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le quantile est de 0.1, ce sont les Top 90 % plus similaires.</div>
+              <h4 class="subtitle" id="subtitle2">Avec score de similarité</h3>
+                <div id = 'subtitle2Content'>Vous devez ajuster le curseur pour définir le score de similarité minimal. Les paires de phrases auront des scores de similarité
+                  supérieurs à ce score.<br>
+                  Si le score est de 0.9, les paires de phrases auront un score de similarité supérieur à 0.9.</div>
+            </div>
+        </div>
+        <div class="popup-section">
+            <div class="popup-section-title" id = 'popup_section_title_2'>Similarité lexicale</div>
+            <div class="popup-section-text" id="popup_section_text_2">
+              La similarité lexicale évalue la similitude entre deux morceaux de texte en analysant
+              leurs mots et leur agencement. Elle se base sur l'utilisation précise des mots dans le texte,
+              comparant ainsi les structures textuelles de manière superficielle.
+            </div>
+        </div>
+        <div class="popup-section">
+            <div class="popup-section-title" id="popup_section_title_3">Similarité avec les embeddings</div>
+            <div class="popup-section-text" , id='popup_section_text_3'>
+              L'utilisation des embeddings prend également en compte la similarité
+              sémantique. Elle repose sur les concepts sous-jacents et la compréhension contextuelle du langage, 
+              plutôt que sur la ressemblance structurelle.
+            </div>
+        </div>
+        <div class="popup-section">
+          <div class="popup-section-title" id='hybrid_method_1'>Méthode hybride</div>
+          <div class="popup-section-text" id='hybrid_method_text_1'>
+            La méthode hybride prend en compte à la fois la méthode lexicale 
+            et celle utilisant les embeddings.<br> Utilisez le curseur pour choisir quelle méthode vous souhaitez utiliser
+            le plus. Une valeur de 0 utilise uniquement les embeddings, une valeur de 1 utilise uniquement la méthode lexicale,
+            et une valeur de  0.5 utilise les deux méthodes de manière égale.
+          </div>
+      </div>
+      <div class="popup-section">
+        <div class="popup-section-title" id='entities_search_1'>Recherche d'entités</div>
+        <div class="popup-section-text" id='entities_search_text_1'>
+          Vous pouvez filtrer et sélectionner des phrases dans les deux textes contenant un mot spécifique comme un nom d'entité.<br>
+        </div>
+      </div>
+      <div class="popup-section">
+        <div class="popup-section-title" id='exact_diff_1'>Afficher les différences exactes</div>
+        <div class="popup-section-text" id='exact_diff_text_1'>
+          Dans le mode recherche d'entités, le bouton "Exact diff" affiche les différences exactes entre les phrases. En rouge sont les suppressions et en vert sont les ajouts.
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

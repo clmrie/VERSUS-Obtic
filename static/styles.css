@@ -1,0 +1,457 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #212121; /* Dark background color */
+    color: #fff; /* White text color */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #2f2f2f; /* Darker container background color */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Darker shadow */
+    margin-left: 20%;
+
+    margin-bottom: 50px;
+    overflow-y: auto;
+}
+
+.text-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.textfield {
+    flex: 1;
+    height: 65vh;
+    padding: 10px;
+    border: 2px solid #8b8888; /* Lighter border color */
+    border-radius: 10px;
+    resize: vertical;
+    background-color: #2f2f2f; /* Medium dark text field background color */
+    color: #fff; /* White text color */
+    resize: none;
+    margin-right: 5px; /* Space between text fields */
+    overflow: auto; /* Enable scrollbar when content exceeds height */
+    text-align: justify;
+}
+
+.textfield:last-child {
+    margin-right: 0; /* Remove margin-right for the last text field */
+}
+
+#submitButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #c13320; /* Dark red */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #be1c06; /* Green on hover */
+}
+
+button:active {
+    background-color: #c13320; /* Darker green on active */
+}
+
+.options-space {
+    position: absolute; /* Absolute positioning to place it on the left */
+    top: 0;
+    left: 0;
+    width: 20%; /* Width of the green space */
+    height: 100%; /* Full height of the container */
+    background-color: #171717; /* Green color */
+    opacity: 0.7;
+}
+
+
+.section-title {
+    font-size: 1.3em; /* Example: Larger font size for title */
+    padding-left: 10px;
+    margin-left: 20px;
+
+    margin-bottom: 5%;
+}
+
+.checkbox-label {
+    padding-left: 10px;
+}
+
+
+
+
+.parameter-select {
+    margin-left: 20px; /* Adjust the margin-left value to match the label */
+}
+
+.checkboxes {
+    margin-left: 20px
+}
+  
+#slider {
+    width: 100%;
+  }
+  
+  #sliderContainer {
+    text-align: center; /* Optional: center-align the slider and labels */
+    /*margin-top: 20px; /* Optional: adjust margin as needed */
+    margin-left:20px;
+    margin-right: 20px; 
+    
+    } 
+
+
+#sliderContainerConfidence {
+    text-align: center; /* Optional: center-align the slider and labels */
+    margin: 20px; /* Optional: adjust margin as needed */
+}
+
+.loading {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+}
+.slider-label-left {
+    position: absolute;
+    left: 10%;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.slider-label-right {
+    position: absolute;
+    right: 10%;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.parameter-label-options {
+    font-weight: bold;
+    color: #e58174; /* Optional: Adjust text color */
+}
+
+
+
+.parameter-label {
+    padding-left: 20px; /* Adds padding to the left of the label */
+    display: block; /* Ensures each label is on its own line */
+    font-weight: bold; /* Optional: Makes the label bold */
+    font-size: 1.1em; /* Optional: Adjusts font size */
+}
+
+.highlighted {
+    background-color: blue;    
+  }
+  
+#sliderConfidence {
+    width: 100%;
+}
+
+
+
+
+.search-input {
+    width: calc(100% - 16px); /* Adjust width for padding */
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ccc; /* Border color */
+    margin-top: 5px; /* Margin around the input */
+    margin-left: 5px; 
+}
+
+.section-title2 {
+    /*margin-bottom: 10px; /* Bottom margin for spacing */
+    font-size: 18px; /* Font size for title */
+    margin-left: 15px;
+    padding-top: 10px;
+}
+
+
+.top-section {
+    background-color: #171717;
+    height: 11.5vh; /* Adjust height as needed */
+ 
+    border-bottom: 2px solid grey;
+    border-right: 2px solid grey;
+
+}
+
+
+.search-button {
+    position: absolute;
+    margin-bottom: 8%;
+    
+
+    color: black;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+        
+
+#sliderConfidence {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 100%; /* Full width of container */
+    height: 10px; /* Height of the slider bar */
+    background: #ffffff; /* Blue background color */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Adjust opacity if desired */
+    transition: opacity 0.15s ease-in-out; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#sliderConfidence::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 20px; /* Width of the slider thumb */
+    height: 20px; /* Height of the slider thumb */
+    background: hsl(0, 72%, 57%);; /* Grey background color */
+    cursor: pointer; /* Cursor style */
+    border-radius: 50%; /* Rounded shape */
+    border: 2px solid hsl(0, 72%, 57%); /* Border color */
+}
+
+#sliderConfidence::-moz-range-thumb {
+    width: 20px; /* Width of the slider thumb */
+    height: 20px; /* Height of the slider thumb */
+    background: #cccccc; /* Grey background color */
+    cursor: pointer; /* Cursor style */
+    border-radius: 50%; /* Rounded shape */
+    border: 2px solid #999999; /* Border color */
+}
+
+#slider {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 100%; /* Full width of container */
+    height: 10px; /* Height of the slider bar */
+    background: #ffffff; /* Blue background color */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Adjust opacity if desired */
+    transition: opacity 0.15s ease-in-out; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 20px; /* Width of the slider thumb */
+    height: 20px; /* Height of the slider thumb */
+    background: hsl(0, 72%, 57%); /* Grey background color */
+    cursor: pointer; /* Cursor style */
+    border-radius: 50%; /* Rounded shape */
+    border: 2px solid #999999; /* Border color */
+}
+
+#slider::-moz-range-thumb {
+    width: 20px; /* Width of the slider thumb */
+    height: 20px; /* Height of the slider thumb */
+    background: #cccccc; /* Grey background color */
+    cursor: pointer; /* Cursor style */
+    border-radius: 50%; /* Rounded shape */
+    border: 2px solid #999999; /* Border color */
+}
+
+#simMethod {
+    margin-top: 5%;
+}
+
+#exact-diff-button{
+
+    padding: 10px;
+    width: 100px;
+    position: absolute;
+    /* Additional styling */
+    background-color: #f0f0f0; /* Light gray background */
+    border: 1px solid #ccc; /* Gray border */
+    color: #333; /* Dark text color */
+    font-size: 13px; /* Font size */
+    text-align: center; /* Center text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+    border-radius: 5px;
+
+    margin-left: 24%;
+    top: 1%;
+    
+}
+
+#reverse-button {
+    
+    top: 1%;
+    margin-left: 21%;
+    
+    height: 40px;
+    width: 40px;
+
+    position:absolute;
+    background-color: rgb(155, 139, 139);
+    border-radius: 5px;
+
+}
+
+#exact-diff-button:hover {
+    /* Remove background color or set it to another color */
+    background-color: #cccccc; /* Transparent background on hover */
+    /* Or you can remove any existing background color */
+    /* background-color: unset; */
+}
+
+#reverse-button:hover {
+
+    background-color: rgb(147, 131, 131); /* Transparent background on hover */
+}
+
+.diff-added {
+    background-color: #73d53a;
+}
+.diff-removed {
+    background-color: #e7536c;
+}
+
+#guideButton {
+    position: absolute;
+    font-size: 16px;
+    background-color: #75899f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 5px;
+    
+    top: 1%;
+    right: 1%;
+}
+
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2f2f2f;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 60%;
+    height: 85%;
+    border-radius: 5%;
+   
+    overflow: auto;
+}
+
+.popup-message {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* Styles for the overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 30px;
+    background: none;
+    border: none;
+}
+
+.popup-close:hover {
+    background-color: inherit !important; /* Inherit background color */
+    color: inherit !important; /* Inherit text color */
+    /* Remove other hover styles as needed */
+  }
+
+
+.popup-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center; /* Center align the popup title */
+
+}
+
+.popup-section {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.popup-section-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: rgb(234, 105, 105);
+}
+
+.popup-message {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+#guideSelect {
+    position: absolute;
+    
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.importButton {
+    padding: 5px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #4e555e;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.importButton:hover {
+    background-color: #7894b3;
+}
+
+.importButton:active {
+    background-color: #7894b3;
+}
+
+#ngrams-container {
+    display: none;
+}
+
+.nb_sentences{
+
+    text-align: center;
+}
