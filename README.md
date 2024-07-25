@@ -2,7 +2,7 @@
 This tool is a web interface allowing to compare lexically and semantically two texts.<br>
 It pairs similar sentences based on the selected metrics.
 
-<img src="preview.png" alt="Tool Screenshot" width="500">
+<img src="preview.png" alt="Tool Screenshot" width="800">
 
 <h2>Instructions to install</h2>
 1. Make sure a recent version of Python is installed on computer.<br>
