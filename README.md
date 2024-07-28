@@ -4,6 +4,8 @@ It pairs similar sentences based on the selected metrics. <br><br>
 
 The this tool allows you to upload large text files (hundreds of pages) and find pairs of sentences in reasonable time (few minutes at most).<br>
 
+<img src="preview.png" alt="Alt text" width="800">
+
 <h2>Instructions to install</h2>
 1. Make sure a recent version of Python is installed on computer.<br>
 2. Download this repo and install libraries by typing in the terminal: `pip install -r requirements.txt`<br>
