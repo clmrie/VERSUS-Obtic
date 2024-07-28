@@ -1,8 +1,8 @@
-<h2>TextSync: lexical and semantic alignment tool</h2>
+<h2>TextSync - Text alignment tool</h2>
 This tool is a web interface allowing to compare lexically and semantically two texts.<br>
-It pairs similar sentences based on the selected metrics.
-<br><br>
-<img src="preview.png" alt="Tool Screenshot" width="800">
+It pairs similar sentences based on the selected metrics. <br><br>
+
+The this tool allows you to upload large text files (hundreds of pages) and find pairs of sentences in reasonable time (few minutes at most).<br>
 
 <h2>Instructions to install</h2>
 1. Make sure a recent version of Python is installed on computer.<br>

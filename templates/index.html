@@ -42,77 +42,79 @@
                     <option value="hybrid">Hybrid</option>
                 </select>
                 <br><br>
-                <label for="similarityMethod2" id='simMethod2' class = "parameter-label">Precision method</label>
-                <select id="similarityMethod2" class = "parameter-select">
-                  <option value="selection_quantile">%Top Quantile</option>
-                  <option value="selection_sim_score">Similarity score</option>
-                  <option value="selection_sentences">Number of sentences/chunks</option>
-                </select>
 
-                <div id="sliderContainerConfidence" >
-                  <div id="sliderValueConfidence"></div> 
-                  <input type="range" id="sliderConfidence" name="slider" min="0" max="1" value="0.7" step="0.01">
-                  <input type="number" id="nb_sentences" name="nb_sentences" value="10" min="1" max="24" style=display:none;>
-                  <br>
-                  <label for="slider" id="slider_precision">%Top Quantile</label>
-                </div>
-                
                 <div id="containerLexical" class="checkboxes">
-                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Lexical metric</label><br>
-                    <input type="radio" id="checkbox1_lexical" name="methods_lexical" value="JACCARD">
-                    <label for="checkbox1_lexical">Jaccard</label><br>
-                    <input type="radio" id="checkbox2_lexical" name="methods_lexical" value="LEVENSHTEIN">
-                    <label for="checkbox2_lexical">Levenshtein</label><br>
-                    <input type="radio" id="checkbox3_lexical" name="methods_lexical" value="HAMMING">
-                    <label for="checkbox3_lexical">Hamming</label><br>
-                    <input type="radio" id="checkbox4_lexical" name="methods_lexical" value="JARO-WINKLER">
-                    <label for="checkbox4_lexical">Jaro-Winkler</label><br>
-                  </div>
-                  <br>
-                  
-                  <label for="text-processing-select" class="parameter-label">Text processing</label>
+                  <label for="embeddingsModelContainer1" class = "parameter-label-options">Lexical metric</label><br>
+                  <input type="radio" id="checkbox1_lexical" name="methods_lexical" value="JACCARD">
+                  <label for="checkbox1_lexical">Jaccard</label><br>
+                  <input type="radio" id="checkbox2_lexical" name="methods_lexical" value="LEVENSHTEIN">
+                  <label for="checkbox2_lexical">Levenshtein</label><br>
+                  <input type="radio" id="checkbox3_lexical" name="methods_lexical" value="HAMMING">
+                  <label for="checkbox3_lexical">Hamming</label><br>
+                  <input type="radio" id="checkbox4_lexical" name="methods_lexical" value="JARO-WINKLER">
+                  <label for="checkbox4_lexical">Jaro-Winkler</label><br>
+                </div>
+             
+                <br>
+                <div id="containerEmbeddings" class="checkboxes" style="display:none;">
+                  <label for="embeddingsModelContainer1" class = "parameter-label-options">Vector distance metrics</label><br>
+                  <input type="radio" id="checkbox1_embeddings" name="methods_embeddings" value="COSINE">
+                  <label for="checkbox1_embeddings">Cosine</label><br>
+                  <input type="radio" id="checkbox2_embeddings" name="methods_embeddings" value="EUCLIDEAN">
+                  <label for="checkbox2_embeddings">Euclidean</label><br>
+                  <input type="radio" id="checkbox3_embeddings" name="methods_embeddings" value="DOT">
+                  <label for="checkbox3_embeddings">Dot product</label><br>
+                </div>
+                <br>
+                <div id="embeddingsModelContainer" class="checkboxes" style="display:none;">
+                  <label for="embeddingsModelContainer1" class = "parameter-label-options">Embedding</label><br>
+                  <input type="radio" id="embeddingsModelContainer1" name="embeddings_model" value="minilm">
+                  <label for="embeddingsModelContainer1">MiniLM-L12-v2</label><br>
+                  <input type="radio" id="embeddingsModelContainer2" name="embeddings_model" value="bert_base">
+                  <label for="embeddingsModelContainer2">bert-base</label><br>
+                  <input type="radio" id="embeddingsModelContainer3" name="embeddings_model" value="distiluse">
+                  <label for="embeddingsModelContainer3">distiluse-base</label><br>
+                </div>
+                <br>
+                <label for="text-processing-select" class="parameter-label">Text processing</label>
                   <select id="text-processing-select" class="parameter-select">
                       <option value="NGRAMS" selected>N-grams</option>
                       <option value="SENTENCES">Sentences</option>
                   </select>
-                  <br>
-                  <br>
-                 
-                  <div id="ngrams-container">
-                    <label for="ngrams-input" id="ngrams-label" class="parameter-label">N-Grams</label>
-                    <input class="parameter-select" type="number" id="ngrams-input" name="ngrams" value="10" min="1" >
-                  </div>
-                  <br>
+                <br><br>
 
-                  <div id="containerEmbeddings" class="checkboxes" style="display:none;">
-                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Vector distance metrics</label><br>
-                    <input type="radio" id="checkbox1_embeddings" name="methods_embeddings" value="COSINE">
-                    <label for="checkbox1_embeddings">Cosine</label><br>
-                    <input type="radio" id="checkbox2_embeddings" name="methods_embeddings" value="EUCLIDEAN">
-                    <label for="checkbox2_embeddings">Euclidean</label><br>
-                    <input type="radio" id="checkbox3_embeddings" name="methods_embeddings" value="DOT">
-                    <label for="checkbox3_embeddings">Dot product</label><br>
-                  </div>
+                <div id="ngrams-container">
+                  <label for="ngrams-input" id="ngrams-label" class="parameter-label">N-Grams length</label>
+                  <input class="parameter-select" type="number" id="ngrams-input" name="ngrams" value="10" min="1" >
+                </div>
+                <br>
 
-                  <br>
+                <label for="similarityMethod2" id='simMethod2' class = "parameter-label">Precision method</label>
+                <select id="similarityMethod2" class = "parameter-select">
+                  <option value="selection_sentences">Number of sentences/n-grams</option>
+                  <option value="selection_quantile">%Top Quantile</option>
+                  <option value="selection_sim_score">Similarity score</option>
+                </select>
 
-                  <div id="embeddingsModelContainer" class="checkboxes" style="display:none;">
-                    <label for="embeddingsModelContainer1" class = "parameter-label-options">Embedding</label><br>
-                    <input type="radio" id="embeddingsModelContainer1" name="embeddings_model" value="minilm">
-                    <label for="embeddingsModelContainer1">MiniLM-L12-v2</label><br>
-                    <input type="radio" id="embeddingsModelContainer2" name="embeddings_model" value="bert_base">
-                    <label for="embeddingsModelContainer2">bert-base</label><br>
-                    <input type="radio" id="embeddingsModelContainer3" name="embeddings_model" value="distiluse">
-                    <label for="embeddingsModelContainer3">distiluse-base</label><br>
-                  </div>
+                <div id="sliderContainerConfidence" >
+                  <div style='display:none;' id="sliderValueConfidence"></div> 
+                  <input style='display:none;' type="range" id="sliderConfidence" name="slider" min="0" max="1" value="0.7" step="0.01">
+                  <input type="number" id="nb_sentences" name="nb_sentences" value="10" min="1" max="24" style='display:none;'>
                   <br>
-                  <div id="sliderContainer" style="display:none;">
-                    <div id="sliderValue"></div> 
-                    <input type="range" id="slider" name="slider" min="0" max="1" value="0.5" step="0.01">
-                    <br>
-                    <label for="slider" class="slider-label-left" >Embeddings</label>
-                    <label for="slider" class="slider-label-right">Lexical</label>
-                  </div>  
+                  <label for="slider" id="slider_precision"style='display:none;'>%Top Quantile</label>
+                </div>
+
+                <div id="sliderContainer" style="display:none;">
+                  <div id="sliderValue"></div> 
+                  <input type="range" id="slider" name="slider" min="0" max="1" value="0.5" step="0.01">
+                  <br>
+                  <label for="slider" class="slider-label-left" >Embeddings</label>
+                  <label for="slider" class="slider-label-right">Lexical</label>
+                </div> 
+                
+                  <br>
+                  <br>
+                
             </div>
         </div>
         <div class="button-container">
@@ -147,6 +149,16 @@
             Deux phrases similaires sont surlignées dans la même couleur.
             Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.
         </div>
+        <div class="popup-section">
+          <div class="popup-section-title" id = "popup_section_title_0">Temps de calcul</div>
+          <div class="popup-section-text">
+              <div id = subtitle0Content>
+                Pour un PDF de 30 pages, le temps de processing (N-grams 10) est de 12s avec méthode lexicale, et 45s avec méthode embeddings.
+                <br><br>
+                Pour un PDF de 300 pages, le temps de processing (N-grams 10) est de 2min 45s avec méthode lexicale, et 4min 20s avec méthode embeddings.
+              </div>
+          </div>
+      </div>
         <div class="popup-section">
             <div class="popup-section-title" id = "popup_section_title_1">Choisir des phrases similaires</div>
             <div class="popup-section-text">

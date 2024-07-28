@@ -93,7 +93,7 @@ document.getElementById('submitButton').addEventListener('click', function() {
     }
 
     var slidingValue = valueDisplay.textContent;   
-    const sliderConfidence = document.getElementById('sliderConfidence').value;
+    let sliderConfidence = document.getElementById('sliderConfidence').value;
 
     var similarityMethod2 = document.getElementById('similarityMethod2');
     var precisionLabel = similarityMethod2.value;
@@ -181,6 +181,33 @@ document.getElementById('submitButton').addEventListener('click', function() {
             button.dispatchEvent(event);
         }
         simulateClick(findNextButton);
+
+
+        // highlighting specific word
+        const entity_button = document.getElementById('exact-diff-button');
+        if (entity_button.style.display === 'block'){
+         const search_entity = document.getElementById('search_entity');
+            const searchTerm = search_entity.value.trim();
+            text_1 = document.getElementById('text1');
+            text_2 = document.getElementById('text2');
+            color = "yellow";
+            function highlightWord(element) {
+                const originalText = element.innerHTML;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                const newText = originalText.replace(regex, `<span class="highlight">$1</span>`);
+                element.innerHTML = newText;
+            }
+    
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .highlight {
+                    color: ${color};
+                }
+            `;
+            highlightWord(text_1);
+            highlightWord(text_2);
+        }
+        
         
     })
     .catch(error => {
@@ -210,6 +237,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var precisionSelector = document.getElementById('similarityMethod2');
     var slider_precision = document.getElementById('slider_precision');
+
+    //var sliderConfidence = document.getElementById('sliderConfidence').value;
+    
     
     precisionSelector.addEventListener('change', function() {
         if (precisionSelector.value === 'selection_quantile'){
@@ -621,6 +651,26 @@ importButton2.addEventListener('click', function() {
         // Update text content with filtered results
         text_1.textContent = filteredText1;
         text_2.textContent = filteredText2;
+
+        color = "yellow";
+        function highlightWord(element) {
+            const originalText = element.innerHTML;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            const newText = originalText.replace(regex, `<span class="highlight">$1</span>`);
+            element.innerHTML = newText;
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .highlight {
+                color: ${color};
+            }
+        `;
+        highlightWord(text_1);
+        highlightWord(text_2);
+
+
+document.head.appendChild(style);
     }
 
     // Function to handle paste events for textfields
@@ -656,7 +706,8 @@ importButton2.addEventListener('click', function() {
     var hybrid_method_text_1 = document.getElementById('hybrid_method_text_1');
     var entities_search_1 = document.getElementById('entities_search_1');
     var entities_search_text_1 = document.getElementById('entities_search_text_1');
-
+    var subtitle0Content = document.getElementById('subtitle0Content');
+    var popup_section_title_0 = document.getElementById('popup_section_title_0');
 
     languageGuideSelect.addEventListener('change', function() {
         var selectedLanguage = languageGuideSelect.value;
@@ -669,6 +720,9 @@ importButton2.addEventListener('click', function() {
                 popup_section_title_1.textContent = `Choisir des phrases similaires`;
                 subtitle1.textContent = 'Top% Quartile';
                 subtitle2.textContent = 'Avec score de similarité';
+
+                popup_section_title_0.textContent = 'Temps de calcul';
+                subtitle0Content.textContent = 'Pour un PDF de 30 pages, le temps de processing (N-grams 10) est de 12s avec méthode lexicale, et 45s avec méthode embeddings. Pour un PDF de 300 pages, le temps de processing (N-grams 10) est de 2min 45s avec méthode lexicale, et 4min 20s avec méthode embeddings.';
                 subtitle1Content.textContent = `Vous devez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un certain pourcentages des phrases les plus
                 similaires se situe.
                 \nSi le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le quantile est de 0.1, ce sont les Top 90 % plus similaires.`;
@@ -714,7 +768,9 @@ importButton2.addEventListener('click', function() {
             subtitle1Content.textContent = `You have to adjust the slider to define what the quantile is: the threshold below which a certain percentage
                 of the most similar sentences falls.\n
                 If the quantile is 0.9, the top 10% most similar sentences are paired. If the quantile is 0.1, it's the top 90%.
-            `
+            `;
+            popup_section_title_0.textContent = 'Computation time';
+            subtitle0Content.textContent = 'For a 30-page PDF, the processing time (N-grams 10) is 12 seconds with the lexical method, and 45 seconds with the embeddings method. For a 300-page PDF, the processing time (N-grams 10) is 2 minutes 45 seconds with the lexical method, and 4 minutes 20 seconds with the embeddings method.';
             popup_section_title_2.textContent = 'Lexical similarity';
             popup_section_text_2.textContent  = `Lexical similarity measures how similar two pieces of text are based on their words and their arrangement.
               It relies on the exact words used in the text, comparing text at the surface level.`;
@@ -740,6 +796,7 @@ importButton2.addEventListener('click', function() {
         }
     })
 
+    var selectedLanguage = languageGuideSelect.value;
     switch (selectedLanguage) {
         case "Français":
             popupTitle.textContent = "Guide pour comparaison de textes";
