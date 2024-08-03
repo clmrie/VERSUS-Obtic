@@ -93,7 +93,7 @@ document.getElementById('submitButton').addEventListener('click', function() {
     }
 
     var slidingValue = valueDisplay.textContent;   
-    let sliderConfidence = document.getElementById('sliderConfidence').value;
+    var sliderConfidence = document.getElementById('sliderConfidence').value;
 
     var similarityMethod2 = document.getElementById('similarityMethod2');
     var precisionLabel = similarityMethod2.value;
@@ -237,8 +237,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var precisionSelector = document.getElementById('similarityMethod2');
     var slider_precision = document.getElementById('slider_precision');
+    
+    
+    number_sentences = document.getElementById('nb_sentences');
+    number_sentences.style.display = 'block';
 
-    //var sliderConfidence = document.getElementById('sliderConfidence').value;
+    sliderValueConfidence.style.display = 'none';
+    
+    
     
     
     precisionSelector.addEventListener('change', function() {
@@ -317,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
         valueDisplay.textContent = sliderValue; // Display slider value somewhere, e.g., in a <span>
       });
 
-      const sliderConfidence = document.getElementById('sliderConfidence');
+      var sliderConfidence = document.getElementById('sliderConfidence');
       const sliderValueDisplay = document.getElementById('sliderValueConfidence');
       
       sliderValueDisplay.textContent = 0.7;
@@ -693,103 +699,138 @@ document.head.appendChild(style);
     var languageGuideSelect = document.getElementById('guideSelect');
     var popupTitle = document.getElementById('popup-title');
     var popupMessage = document.getElementById('popup-message');
-    var popup_section_title_1 = document.getElementById('popup_section_title_1');
-    var subtitle1 = document.getElementById('subtitle1');
-    var subtitle2 = document.getElementById('subtitle2');
-    var subtitle1Content = document.getElementById('subtitle1Content');
-    var subtitle2Content = document.getElementById('subtitle2Content');
-    var popup_section_title_2 = document.getElementById('popup_section_title_2');
-    var popup_section_text_2 = document.getElementById('popup_section_text_2');
-    var popup_section_title_3 = document.getElementById('popup_section_title_3');
-    var popup_section_text_3 = document.getElementById('popup_section_text_3');
-    var hybrid_method_1 = document.getElementById('hybrid_method_1');
+    
+    var title_sim = document.getElementById('title_sim');
+    var tile_sim_content = document.getElementById('tile_sim_content');
+    var sub_title_sim = document.getElementById('sub_title_sim');
+    var sub_title_sim_content = document.getElementById('sub_title_sim_content');
+    var title_embeddings = document.getElementById('title_embeddings');
+    var sub_embeddings_content = document.getElementById('sub_embeddings_content');
+    var title_hybrid = document.getElementById('title_hybrid');
     var hybrid_method_text_1 = document.getElementById('hybrid_method_text_1');
+    var popup_section_title_0 = document.getElementById('popup_section_title_0');
+    var subtitle0Content = document.getElementById('subtitle0Content');
+    var popup_section_title_1 = document.getElementById('popup_section_title_1');
+    var popup_section_title_1_content = document.getElementById('popup_section_title_1_content');
+    var subtitle1 = document.getElementById('subtitle1');
+    var subtitle1Content = document.getElementById('subtitle1Content');
+    var subtitle2 = document.getElementById('subtitle2');
+    var subtitle2Content = document.getElementById('subtitle2Content');
+    var subtitle3 = document.getElementById('subtitle3');
+    var subtitle3Content = document.getElementById('subtitle3Content');
     var entities_search_1 = document.getElementById('entities_search_1');
     var entities_search_text_1 = document.getElementById('entities_search_text_1');
-    var subtitle0Content = document.getElementById('subtitle0Content');
-    var popup_section_title_0 = document.getElementById('popup_section_title_0');
+    var exact_diff_1 = document.getElementById('exact_diff_1');
+    var exact_diff_text_1 = document.getElementById('exact_diff_text_1');
+    var final = document.getElementById('final');
+
+    var calc_title = document.getElementById('calc_title');
+    var calc_title_content = document.getElementById('calc_title_content');
+
+
 
     languageGuideSelect.addEventListener('change', function() {
         var selectedLanguage = languageGuideSelect.value;
         switch (selectedLanguage) {
             case "guide_french":
                 popupTitle.textContent = "Guide pour comparaison de textes";
-                popupMessage.textContent = `Cet outil permet de comparer deux textes en utilisant plusieurs méthodes de similarité : lexicale, avec des embeddings, ou les deux (hybride).
-    Deux phrases similaires sont surlignées dans la même couleur.
-    Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.`;
-                popup_section_title_1.textContent = `Choisir des phrases similaires`;
-                subtitle1.textContent = 'Top% Quartile';
-                subtitle2.textContent = 'Avec score de similarité';
+                popupMessage.textContent = `Cet outil permet de comparer deux textes (en anglais ou en français), en utilisant plusieurs méthodes de similarité : lexicale, avec des embeddings, ou les deux (hybride). Deux phrases similaires sont surlignées dans la même couleur. Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.
+On peut charger les textes à partir des boutons "Import", et le bouton "Find next" permet de naviguer d'un passage à l'autre, dans un ordre de similarité décroissant.`;
 
-                popup_section_title_0.textContent = 'Temps de calcul';
-                subtitle0Content.textContent = 'Pour un PDF de 30 pages, le temps de processing (N-grams 10) est de 12s avec méthode lexicale, et 45s avec méthode embeddings. Pour un PDF de 300 pages, le temps de processing (N-grams 10) est de 2min 45s avec méthode lexicale, et 4min 20s avec méthode embeddings.';
-                subtitle1Content.textContent = `Vous devez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un certain pourcentages des phrases les plus
-                similaires se situe.
-                \nSi le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le quantile est de 0.1, ce sont les Top 90 % plus similaires.`;
-                subtitle2Content.textContent = `Vous devez ajuster le curseur pour définir le score de similarité minimal. Les paires de phrases auront des scores de similarité
-                supérieurs à ce score.\n
-                Si le score est de 0.9, les paires de phrases auront un score de similarité supérieur à 0.9.`
-                popup_section_title_2.textContent = 'Similarité lexicale';
-                popup_section_text_2.textContent = `La similarité lexicale évalue la similitude entre deux morceaux de texte en analysant
-                leurs mots et leur agencement. Elle se base sur l'utilisation précise des mots dans le texte,
-                comparant ainsi les structures textuelles de manière superficielle.`;
-                popup_section_title_3.textContent = 'Similarité avec les embeddings';
-                popup_section_text_3.textContent = `L'utilisation des embeddings prend également en compte la similarité
-                sémantique. Elle repose sur les concepts sous-jacents et la compréhension contextuelle du langage, 
-                plutôt que sur la ressemblance structurelle.`
-                hybrid_method_1.textContent = 'Méthode hybride';
-                hybrid_method_text_1.textContent = `La méthode hybride prend en compte à la fois la méthode lexicale 
-                et celle utilisant les embeddings.\n Utilisez le curseur pour choisir quelle méthode vous souhaitez utiliser
-                le plus. Une valeur de 0 utilise uniquement les embeddings, une valeur de 1 utilise uniquement la méthode lexicale,
-                et une valeur de  0.5 utilise les deux méthodes de manière égale.`;
-                entities_search_1.textContent = "Recherche d'entités";
-                entities_search_text_1.textContent = `
-                Vous pouvez filtrer et sélectionner des phrases dans les deux textes contenant un mot spécifique comme un nom d'entité.\n
-                `;
+        
+        title_sim.textContent = "Méthode de calcul de similarité";
+        tile_sim_content.textContent = "L'outil offre 3 méthodes de comparaison:";
+        sub_title_sim.textContent = "1 - Similarité lexicale";
+        sub_title_sim_content.textContent = `
+        La similarité lexicale évalue la similitude entre deux passages de texte en analysant leurs mots et leur agencement. Elle se base sur la forme des mots dans le texte, comparant ainsi les structures textuelles au niveau de la surface. L’utilisateur peut choisir entre l’un de ces 4 métriques pour la comparaison : Jaccard, Levenstein, Hamming ou Jaro-Winker.
+        `; 
+        
+        title_embeddings.textContent = "2 - Similarité avec les embeddings";
+        sub_embeddings_content.textContent = `
+        L'utilisation des embeddings prend en compte la similarité sémantique. Elle repose sur les concepts sous-jacents et la compréhension contextuelle du langage, plutôt que sur la ressemblance formelle. L’utilisateur peut choisir entre l’un de ces 3 métriques pour la comparaison : Cosinus, Euclidien ou Produit scalaire. On peut également choisir parmi 3 modèles de langue disponibles : AllMiniLM-L12- v2, BertBase ou DistiluseBase.
+        `;
 
-                exact_diff_1.textContent = "Afficher les différences exactes";
-                exact_diff_text_1.textContent = `Dans le mode recherche d'entités, le bouton "Exact diff" affiche les différences exactes entre les phrases. En rouge sont les suppressions et en vert sont les ajouts.`;
+        title_hybrid.textContent = "3 - Méthode hybride";
+        hybrid_method_text_1.textContent = `
+        La méthode hybride prend en compte à la fois la méthode lexicale et celle utilisant les embeddings. Utilisez le curseur pour choisir quelle méthode vous souhaitez utiliser le plus. Une valeur de 0 utilise uniquement les embeddings, une valeur de 1 utilise uniquement la méthode lexicale, et une valeur de 0.5 utilise les deux méthodes de manière égale.
+        `;
+
+        popup_section_title_0.textContent = "Type de segments à comparer";
+        subtitle0Content.textContent = "On peut choisir entre des phrases et des n-grammes.";
+
+        popup_section_title_1.textContent = "Précision sur les passages à afficher";
+        popup_section_title_1_content.textContent = "La précision sur la similarité entre les passages à comparer est paramétrable :";
+
+        subtitle1.textContent = "1 - Top% Quartile";
+        subtitle1Content.textContent = "Vous pouvez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un certain pourcentage des phrases les plus similaires se situe. Par exemple, si le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le quantile est de 0.1, ce sont les Top 90 % plus similaires.";
+
+        subtitle2.textContent = "2 - Score de similarité";
+        subtitle2Content.textContent = "Vous pouvez ajuster le curseur pour définir le score de similarité minimal. Les paires de phrases auront des scores de similarité supérieurs à ce score. Par exemple, si le score est de 0.9, les paires de phrases auront un score de similarité supérieur à 0.9.";
+
+        subtitle3.textContent = "3 - Nombre de phrases ou des n-grammes";
+        subtitle3Content.textContent = "Choisir un nombre maximum de résultats à afficher.";
+
+        entities_search_1.textContent = "Recherche d'entités";
+        entities_search_text_1.textContent = `Vous pouvez filtrer et sélectionner des phrases dans les deux textes contenant un mot spécifique comme un nom d'entité (appuyez sur Entrée après la saisie d’un terme).`;
+
+        exact_diff_1.textContent = "Afficher les différences exactes";
+        exact_diff_text_1.textContent = `Dans le mode recherche d'entités, le bouton "Exact diff" affiche les différences exactes entre les phrases. En rouge sont les suppressions et en vert sont les ajouts. Cette fonctionnalité est pertinente quand les textes à comparer sont courts.`;
 
 
-                break;
+        calc_title.textContent = "Temps de calcul";
+        calc_title_content.textContent = "Pour un fichier PDF de 30 pages, le temps de traitement (N-grams 10) est environ de 12s avec la méthode lexicale, et de 45s avec la méthode des embeddings. Pour un fichier PDF de 300 pages, le temps de traitement (N-grams 10) est de 2min 45s avec la méthode lexicale, et 4min 20s avec la méthode des embeddings.";
+
+        final.textContent = `Travail réalisé par Clément MARIE sous la direction de Motasem ALRAHABI (Sorbonne Université).\n\n
+Pour toute question, merci de nous écrire : motasem.alrahabi@gmail.com`;
+
+                break;  
 
 
             case "guide_english":
                 popupTitle.textContent = "Guide for Text comparison";
-                popupMessage.textContent = `This tool allows to compare two texts based on several similarity methods: lexical, with embeddings, or both (hybrid).
-            Two similar sentences are highlighted in the same color.
-            For each method, you can use several metrics to measure similarity.`;
-            popup_section_title_1.textContent.textContent = 'Choosing similar sentences';
-            subtitle1.textContent = 'Top% Quantile';
-            subtitle2.textContent = 'With similarity score';
-            subtitle2Content.textContent = `You have to adjust the slider to define what is the minimal similarity score.All paired sentences will have similarity scores
-                superior to this score.\n
-                If the score is 0.9, all paired sentences have a similarity score greater than 0.9.`;
-            subtitle1Content.textContent = `You have to adjust the slider to define what the quantile is: the threshold below which a certain percentage
-                of the most similar sentences falls.\n
-                If the quantile is 0.9, the top 10% most similar sentences are paired. If the quantile is 0.1, it's the top 90%.
-            `;
-            popup_section_title_0.textContent = 'Computation time';
-            subtitle0Content.textContent = 'For a 30-page PDF, the processing time (N-grams 10) is 12 seconds with the lexical method, and 45 seconds with the embeddings method. For a 300-page PDF, the processing time (N-grams 10) is 2 minutes 45 seconds with the lexical method, and 4 minutes 20 seconds with the embeddings method.';
-            popup_section_title_2.textContent = 'Lexical similarity';
-            popup_section_text_2.textContent  = `Lexical similarity measures how similar two pieces of text are based on their words and their arrangement.
-              It relies on the exact words used in the text, comparing text at the surface level.`;
-            popup_section_title_3.textContent = 'Similarity with embeddings';
-            popup_section_text_3.textContent = `Using embeddings takes also into account semantic similarity. It is based on the underlying concepts and contextual
-                understanding of language instead of the structural ressemblance.`;
-            hybrid_method_1.textContent = 'Hybrid method';
-            hybrid_method_text_1.textContent = `
-            The hybrid method takes into account both the lexical method and the one with embeddings.\n
-            Use the slider to choose what method you want to use the most. 0 value means you only use embeddings, 1 means you only use
-            the lexical method, and 0.5 means you use both methods equally.`;
-            entities_search_1.textContent = 'Entities search'
-            entities_search_text_1.textContent = `You can filter and select sentences in both texts containing a specific word such as an entity name.\n
-          `;
+                popupMessage.textContent = `
+                This tool allows you to compare two texts (in English or French) using several similarity methods: lexical, with embeddings, or both (hybrid). Similar sentences are highlighted in the same color. For each method, you can use several metrics to measure similarity. You can load texts using the "Import" buttons, and the "Find next" button allows you to navigate from one passage to another in decreasing order of similarity.
+                `;
+            
+                title_sim.textContent = "Method for calculating similarity";
+                tile_sim_content.textContent = "The tool offers 3 comparison methods:";
+                sub_title_sim.textContent = "1 - Lexical similarity";
+                sub_title_sim_content.textContent = `
+                Lexical similarity assesses the similarity between two text passages by analyzing their words and their arrangement. It is based on the form of the words in the text, comparing textual structures at the surface level. The user can choose from one of these 4 metrics for comparison: Jaccard, Levenshtein, Hamming, or Jaro-Winkler.`; 
+                
+                title_embeddings.textContent = "2 - Similarity with embeddings";
+                sub_embeddings_content.textContent = `The use of embeddings takes semantic similarity into account. It relies on the underlying concepts and contextual understanding of language, rather than formal resemblance. The user can choose from one of these 3 metrics for comparison: Cosine, Euclidean, or Dot product. One can also select from 3 available language models: AllMiniLM-L12-v2, BertBase, or DistiluseBase.`;
 
-          exact_diff_1.textContent = "Show exact differences";
-          exact_diff_text_1.textContent = `In entity search mode, the "Exact diff" button displays the exact differences between the sentences. Deletions are shown in red, and additions are shown in green.`;
-          
+                title_hybrid.textContent = "3 - Hybrid method";
+                hybrid_method_text_1.textContent = `The hybrid method takes into account both the lexical method and the embedding-based method. Use the slider to choose which method you want to prioritize. A value of 0 uses only embeddings, a value of 1 uses only the lexical method, and a value of 0.5 uses both methods equally.`;
 
+                popup_section_title_0.textContent = "Type of segments to compare";
+                subtitle0Content.textContent = "You can choose between sentences and n-grams.";
+
+                popup_section_title_1.textContent = "Accuracy on the passages to display";
+                popup_section_title_1_content.textContent = "The accuracy of the similarity between the passages to compare is adjustable:";
+
+                subtitle1.textContent = "1 - Top% Quantile";
+                subtitle1Content.textContent = "You can adjust the slider to define the quantile: the threshold below which a certain percentage of the most similar sentences fall. For example, if the quantile is 0.9, the top 10% of the most similar sentences are matched. If the quantile is 0.1, it matches the top 90% most similar sentences.";
+
+                subtitle2.textContent = "2 - Similarity score";
+                subtitle2Content.textContent = "You can adjust the slider to set the minimum similarity score. Sentence pairs will have similarity scores above this threshold. For example, if the score is 0.9, only pairs of sentences with a similarity score above 0.9 will be considered.";
+
+                subtitle3.textContent = "3 - Number of sentences or n-grams";
+                subtitle3Content.textContent = "Choose a maximum number of results to display.";
+
+                entities_search_1.textContent = "Entities search";
+                entities_search_text_1.textContent = `You can filter and select sentences in both texts containing a specific word, such as an entity name (press Enter after entering a term).`;
+
+                exact_diff_1.textContent = "Show exact differences";
+                exact_diff_text_1.textContent = `In entity search mode, the "Exact diff" button shows the exact differences between sentences. Deletions are highlighted in red, and additions are highlighted in green. This feature is useful when the texts being compared are short.`;
+
+            
+                calc_title.textContent = "Computation time";
+                calc_title_content.textContent = "For a 30-page PDF, the processing time (N-grams 10) is approximately 12 seconds with the lexical method and 45 seconds with the embedding method. For a 300-page PDF, the processing time (N-grams 10) is 2 minutes 45 seconds with the lexical method and 4 minutes 20 seconds with the embedding method.";
+
+                final.textContent = `Work carried out by Clément MARIE under the supervision of Motasem ALRAHABI (Sorbonne University).\n\n
+For any questions, please contact us at: motasem.alrahabi@gmail.com`;
 
             default:
                 break;

@@ -137,6 +137,7 @@ button:active {
 .parameter-label-options {
     font-weight: bold;
     color: #e58174; /* Optional: Adjust text color */
+
 }
 
 
@@ -178,12 +179,11 @@ button:active {
 
 
 .top-section {
+    margin-top: 50px;
     background-color: #171717;
     height: 11.5vh; /* Adjust height as needed */
  
-    border-bottom: 2px solid grey;
-    border-right: 2px solid grey;
-
+    border-top: 2px solid #2f2f2f;
 }
 
 
@@ -454,4 +454,16 @@ button:active {
 .nb_sentences{
 
     text-align: center;
+}
+
+
+#line-segment {
+    border-top: 2px solid #2f2f2f;
+    padding-top: 10px; 
+}
+
+#name {
+    padding-left: 20px;
+    font-family: 'Special Elite', cursive;
+
 }

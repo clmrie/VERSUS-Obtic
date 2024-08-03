@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Comparison Interface</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/diff/4.0.2/diff.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/diff2html/3.4.16/diff2html.min.js"></script>
@@ -29,11 +30,7 @@
   </div>
     <div class="container">
         <div class="options-space">
-          <div class="top-section">
-            <div class="section-title2">Entities search</div>
-            <input type="search" id="search_entity" class="search-input" placeholder="Search...">
-
-        </div>
+          <h1 id='name'>VERSUS</h1>
             <div class="normal-section">  
                 <label for="similarityMethod" id='simMethod' class = "parameter-label">Similarity method</label>
                 <select id="similarityMethod" class = "parameter-select">
@@ -71,12 +68,12 @@
                   <input type="radio" id="embeddingsModelContainer1" name="embeddings_model" value="minilm">
                   <label for="embeddingsModelContainer1">MiniLM-L12-v2</label><br>
                   <input type="radio" id="embeddingsModelContainer2" name="embeddings_model" value="bert_base">
-                  <label for="embeddingsModelContainer2">bert-base</label><br>
+                  <label for="embeddingsModelContainer2">Bert-base</label><br>
                   <input type="radio" id="embeddingsModelContainer3" name="embeddings_model" value="distiluse">
-                  <label for="embeddingsModelContainer3">distiluse-base</label><br>
+                  <label for="embeddingsModelContainer3">Distiluse-base</label><br>
                 </div>
                 <br>
-                <label for="text-processing-select" class="parameter-label">Text processing</label>
+                <label for="text-processing-select" class="parameter-label" id="line-segment">Segment type</label>
                   <select id="text-processing-select" class="parameter-select">
                       <option value="NGRAMS" selected>N-grams</option>
                       <option value="SENTENCES">Sentences</option>
@@ -89,7 +86,7 @@
                 </div>
                 <br>
 
-                <label for="similarityMethod2" id='simMethod2' class = "parameter-label">Precision method</label>
+                <label for="similarityMethod2" id='line-segment' class = "parameter-label">Results to display</label>
                 <select id="similarityMethod2" class = "parameter-select">
                   <option value="selection_sentences">Number of sentences/n-grams</option>
                   <option value="selection_quantile">%Top Quantile</option>
@@ -112,6 +109,11 @@
                   <label for="slider" class="slider-label-right">Lexical</label>
                 </div> 
                 
+                <div class="top-section">
+                  <div class="section-title2">Entities search</div>
+                  <input type="search" id="search_entity" class="search-input" placeholder="Search...">
+                </div>
+
                   <br>
                   <br>
                 
@@ -145,70 +147,114 @@
         <div class="popup-title" id="popup-title">Guide pour comparaison de textes</div>
         
         <div class="popup-message" id="popup-message">
-            Cet outil permet de comparer deux textes en utilisant plusieurs méthodes de similarité : lexicale, avec des embeddings, ou les deux (hybride).
-            Deux phrases similaires sont surlignées dans la même couleur.
-            Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.
+          Cet outil permet de comparer deux textes (en anglais ou en français), en utilisant plusieurs méthodes de similarité : lexicale, avec des embeddings, ou les deux (hybride). Deux phrases similaires sont surlignées dans la même couleur. Pour chaque méthode, vous pouvez utiliser plusieurs métriques pour mesurer la similarité.
+          On peut charger les textes à partir des boutons "Import", et le bouton "Find next" permet de naviguer d'un passage à l'autre, dans un ordre de similarité décroissant.
         </div>
+
         <div class="popup-section">
-          <div class="popup-section-title" id = "popup_section_title_0">Temps de calcul</div>
-          <div class="popup-section-text">
-              <div id = subtitle0Content>
-                Pour un PDF de 30 pages, le temps de processing (N-grams 10) est de 12s avec méthode lexicale, et 45s avec méthode embeddings.
-                <br><br>
-                Pour un PDF de 300 pages, le temps de processing (N-grams 10) est de 2min 45s avec méthode lexicale, et 4min 20s avec méthode embeddings.
+          <div class="popup-section-title" id ='title_sim'>Méthode de calcul de similarité</div>
+          <div class="popup-section-text" id="tile_sim_content">
+            L'outil offre 3 méthodes de comparaison:
+          </div>
+        </div>
+        <div class="popup-message" id="popup-message">
+        </div>
+
+        <div class="popup-section">
+          <h4 id = 'sub_title_sim'>1 - Similarité lexicale</h4>
+          <div class="popup-section-text" id="sub_title_sim_content">
+            La similarité lexicale évalue la similitude entre deux passages de texte en analysant leurs mots et leur
+agencement. Elle se base sur la forme des mots dans le texte, comparant ainsi les structures
+textuelles au niveau de la surface. L’utilisateur peut choisir entre l’un de ces 4 métriques pour la
+comparaison : Jaccard, Levenstein, Hamming ou Jaro-Winker.
+          </div>
+        </div>
+      <div class="popup-section">
+          <h4 id="title_embeddings">2 - Similarité avec les embeddings</h4>
+          <div class="popup-section-text" , id='sub_embeddings_content'>
+            L'utilisation des embeddings prend en compte la similarité sémantique. Elle repose sur les concepts
+sous-jacents et la compréhension contextuelle du langage, plutôt que sur la ressemblance formelle.
+L’utilisateur peut choisir entre l’un de ces 3 métriques pour la comparaison : Cosinus, Euclidien ou
+Produit scalaire. On peut également choisir parmi 3 modèles de langue disponibles : AllMiniLM-L12-
+v2, BertBase ou DistiluseBase.
+          </div>
+      </div>
+      <div class="popup-section">
+        <h4 id='title_hybrid'>3 - Méthode hybride</h4>
+        <div class="popup-section-text" id='hybrid_method_text_1'>
+          La méthode hybride prend en compte à la fois la méthode lexicale et celle utilisant les embeddings.
+Utilisez le curseur pour choisir quelle méthode vous souhaitez utiliser le plus. Une valeur de 0 utilise
+uniquement les embeddings, une valeur de 1 utilise uniquement la méthode lexicale, et une valeur
+de 0.5 utilise les deux méthodes de manière égale.
+        </div>
+      </div>
+
+      <div class="popup-section">
+        <div class="popup-section-title" id = "popup_section_title_0">Type de segments à comparer</div>
+        <div class="popup-section-text">
+            <div id = subtitle0Content>
+              On peut choisir entre des phrases et des n-grammes.
+            </div>
+        </div>
+      </div>
+
+      <div class="popup-section">
+        <div class="popup-section-title" id = "popup_section_title_1">Précision sur les passages à afficher</div>
+        <div class="popup-section-text" id = "popup_section_title_1_content">
+         La précision sur la similarité entre les passages à comparer est paramétrable :
+        </div>
+          <h4 class="subtitle" id ='subtitle1'>1 - Top% Quartile</h3>
+            <div id = subtitle1Content>
+              Vous pouvez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un
+certain pourcentage des phrases les plus similaires se situe.
+Par exemple, si le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le
+quantile est de 0.1, ce sont les Top 90 % plus similaires.
+            </div>
+          <h4 class="subtitle" id="subtitle2">2 - Score de similarité</h3>
+            <div id = 'subtitle2Content'>
+              Vous pouvez ajuster le curseur pour définir le score de similarité minimal. Les paires de phrases
+auront des scores de similarité supérieurs à ce score. Par exemple, si le score est de 0.9, les paires de
+phrases auront un score de similarité supérieur à 0.9.
+            </div>
+            <h4 class="subtitle" id="subtitle3">3 - Nombre de phrases ou des n-grammes</h3>
+              <div id = 'subtitle3Content'>
+                Choisir un nombre maximum de résultats à afficher.
               </div>
-          </div>
+    
+
+    <div class="popup-section">
+      <div class="popup-section-title" id='entities_search_1'>Recherche d'entités</div>
+      <div class="popup-section-text" id='entities_search_text_1'>
+        Vous pouvez filtrer et sélectionner des phrases dans les deux textes contenant un mot spécifique
+comme un nom d'entité (appuyez sur Entrée après la saisie d’un terme).
       </div>
-        <div class="popup-section">
-            <div class="popup-section-title" id = "popup_section_title_1">Choisir des phrases similaires</div>
-            <div class="popup-section-text">
-              <h4 class="subtitle" id ='subtitle1'>Top% Quartile</h3>
-                <div id = subtitle1Content>Vous devez ajuster le curseur pour définir ce qu'est le quantile : le seuil en dessous duquel un certain pourcentage des phrases les
-                  plus similaires se situe.
-                  <br>Si le quantile est de 0.9, le top 10 % des phrases les plus similaires sont appariées. Si le quantile est de 0.1, ce sont les Top 90 % plus similaires.</div>
-              <h4 class="subtitle" id="subtitle2">Avec score de similarité</h3>
-                <div id = 'subtitle2Content'>Vous devez ajuster le curseur pour définir le score de similarité minimal. Les paires de phrases auront des scores de similarité
-                  supérieurs à ce score.<br>
-                  Si le score est de 0.9, les paires de phrases auront un score de similarité supérieur à 0.9.</div>
-            </div>
-        </div>
-        <div class="popup-section">
-            <div class="popup-section-title" id = 'popup_section_title_2'>Similarité lexicale</div>
-            <div class="popup-section-text" id="popup_section_text_2">
-              La similarité lexicale évalue la similitude entre deux morceaux de texte en analysant
-              leurs mots et leur agencement. Elle se base sur l'utilisation précise des mots dans le texte,
-              comparant ainsi les structures textuelles de manière superficielle.
-            </div>
-        </div>
-        <div class="popup-section">
-            <div class="popup-section-title" id="popup_section_title_3">Similarité avec les embeddings</div>
-            <div class="popup-section-text" , id='popup_section_text_3'>
-              L'utilisation des embeddings prend également en compte la similarité
-              sémantique. Elle repose sur les concepts sous-jacents et la compréhension contextuelle du langage, 
-              plutôt que sur la ressemblance structurelle.
-            </div>
-        </div>
-        <div class="popup-section">
-          <div class="popup-section-title" id='hybrid_method_1'>Méthode hybride</div>
-          <div class="popup-section-text" id='hybrid_method_text_1'>
-            La méthode hybride prend en compte à la fois la méthode lexicale 
-            et celle utilisant les embeddings.<br> Utilisez le curseur pour choisir quelle méthode vous souhaitez utiliser
-            le plus. Une valeur de 0 utilise uniquement les embeddings, une valeur de 1 utilise uniquement la méthode lexicale,
-            et une valeur de  0.5 utilise les deux méthodes de manière égale.
-          </div>
+    </div>
+    <div class="popup-section">
+      <div class="popup-section-title" id='exact_diff_1'>Afficher les différences exactes</div>
+      <div class="popup-section-text" id='exact_diff_text_1'>
+        Dans le mode recherche d'entités, le bouton "Exact diff" affiche les différences exactes entre les
+phrases. En rouge sont les suppressions et en vert sont les ajouts. Cette fonctionnalité est pertinente
+quand les textes à comparer sont courts.
       </div>
+    </div>
+
       <div class="popup-section">
-        <div class="popup-section-title" id='entities_search_1'>Recherche d'entités</div>
-        <div class="popup-section-text" id='entities_search_text_1'>
-          Vous pouvez filtrer et sélectionner des phrases dans les deux textes contenant un mot spécifique comme un nom d'entité.<br>
-        </div>
+        <div class="popup-section-title" id = "calc_title">Temps de calcul</div>
+        <div class="popup-section-text" id = calc_title_content>
+          Pour un fichier PDF de 30 pages, le temps de traitement (N-grams 10) est environ de 12s avec la
+méthode lexicale, et de 45s avec la méthode des embeddings.
+Pour un fichier PDF de 300 pages, le temps de traitement (N-grams 10) est de 2min 45s avec la
+méthode lexicale, et 4min 20s avec la méthode des embeddings.
       </div>
-      <div class="popup-section">
-        <div class="popup-section-title" id='exact_diff_1'>Afficher les différences exactes</div>
-        <div class="popup-section-text" id='exact_diff_text_1'>
-          Dans le mode recherche d'entités, le bouton "Exact diff" affiche les différences exactes entre les phrases. En rouge sont les suppressions et en vert sont les ajouts.
+         
         </div>
-      </div>
+        <br><br>
+        <div id="final">
+        Travail réalisé par Clément MARIE sous la direction de Motasem ALRAHABI (Sorbonne Université).<br>
+Pour toute question, merci de nous écrire : motasem.alrahabi@gmail.com
+          </div>
+
+      
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
