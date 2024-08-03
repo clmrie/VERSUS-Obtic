@@ -2,6 +2,8 @@
 This tool is a web interface allowing to compare lexically and semantically two texts.<br>
 It pairs similar sentences based on the selected metrics. <br><br>
 
+<img src="preview.png" alt="Example Image" width="500"/>
+
 The this tool allows you to upload large text files (hundreds of pages) and find pairs of sentences in reasonable time (few minutes at most).<br>
 
 <h2>Instructions to install</h2>
